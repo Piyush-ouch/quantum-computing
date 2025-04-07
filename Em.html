@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Computing for Smart Cities</title>
+    <style>
+        /* All your original styles remain unchanged */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #ff9900, #ff0055);
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 12px #ff0055aa;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(90deg, #ff0055, #ff9900);
+            box-shadow: 0 0 20px #ff9900bb;
+            transform: scale(1.05);
+            color: #000;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 80px;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .main-content {
+            padding: 10rem 1rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 95%;
+        }
+        
+        h3 {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+        
+        .box-container {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        
+        .box {
+            flex: 1;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 15px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            min-height: 350px;
+            position: relative;
+            overflow: hidden;
+            min-width: 45%;
+        }
+        
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 138, 0, 0.15);
+        }
+        
+        .box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+        }
+        
+        .box h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .box p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .box-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .divider {
+            margin: 4rem auto;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                          transparent, 
+                          rgba(255, 138, 0, 0.5), 
+                          rgba(226, 46, 113, 0.5), 
+                          transparent);
+            border: none;
+            opacity: 0.7;
+        }
+        
+        .big-box {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 2rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+            transition: all 0.3s ease;
+        }
+        
+        .big-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+        }
+        
+        .big-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 138, 0, 0.1);
+        }
+        
+        .big-box h4 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .big-box p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .big-box-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* New solution section styles */
+        .solution-box {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 4rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .solution-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+        }
+        
+        .solution-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .step {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+            border-left: 3px solid;
+            position: relative;
+        }
+        
+        .step-1 { border-color: #4CAF50; }
+        .step-2 { border-color: #2196F3; }
+        .step-3 { border-color: #9C27B0; }
+        .step-4 { border-color: #FF5722; }
+        
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-title::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .step-1 .step-title::before { background: #4CAF50; }
+        .step-2 .step-title::before { background: #2196F3; }
+        .step-3 .step-title::before { background: #9C27B0; }
+        .step-4 .step-title::before { background: #FF5722; }
+        
+        .step-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            padding-left: 30px;
+        }
+        
+        .example-section {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-column {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .classical {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        .quantum {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        
+        .column-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        @media (max-width: 1200px) {
+            h3 {
+                font-size: 2.4rem;
+                white-space: normal;
+            }
+            
+            .box-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .box {
+                min-height: auto;
+                min-width: 100%;
+            }
+            
+            .divider {
+                width: 90%;
+                margin: 3rem auto;
+            }
+            
+            .big-box, .solution-box {
+                padding: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            h3 {
+                font-size: 2rem;
+                text-align: left;
+            }
+            
+            .main-content {
+                padding: 8rem 1rem 4rem;
+            }
+            
+            .box {
+                padding: 1.8rem;
+            }
+            
+            .divider {
+                width: 100%;
+                margin: 2.5rem auto;
+            }
+            
+            .big-box, .solution-box {
+                padding: 2rem;
+            }
+            
+            .big-box h4, .solution-title {
+                font-size: 1.8rem;
+            }
+            
+            .big-box p, .step-content {
+                font-size: 1.1rem;
+            }
+            
+            .big-box-icon {
+                font-size: 3rem;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">Quantum Computing for Smart Cities</a>
+        <div class="nav-buttons">
+            <a href="ct.html" class="nav-btn">Traffic Optimization</a>
+            <a href="Em.html" class="nav-btn">Energy management</a>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <h3>Key Areas Where Quantum Computing Helps Smart Cities</h3>
+        
+        <div class="box-container">
+            <div class="box">
+                <div class="box-icon">
+                    <i class="fas fa-traffic-light"></i>
+                </div>
+                <h4>Traffic and Transportation Optimization</h4>
+                <p>Quantum algorithms can process vast amounts of traffic data in real-time, predicting congestion patterns and optimizing traffic light sequences across entire cities. This reduces commute times by up to 30% while decreasing emissions through more efficient routing. The quantum advantage allows for analyzing millions of possible scenarios simultaneously to find optimal solutions.</p>
+            </div>
+            
+            <div class="box">
+                <div class="box-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h4>Energy Management</h4>
+                <p>Quantum computing enables ultra-precise energy grid simulations, balancing renewable energy sources with demand fluctuations. This results in smarter energy distribution, reduced waste, and more stable power grids capable of handling complex smart city infrastructures. Quantum optimization can coordinate thousands of energy inputs and outputs across a city's microgrids for maximum efficiency.</p>
+            </div>
+        </div>
+        
+        <hr class="divider">
+        
+        <div class="big-box">
+            <div class="big-box-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h4>Problem: Managing Energy in a Smart City is Hard</h4>
+            <p>In a smart city, energy comes from different sources:
+                <h2>1.Traditional sources like coal or gas</h2>
+                <h2>2.Renewable sources like solar and wind</h2>
+            <p>The challenge is:
+                <h2>1.Solar and wind change with weather</h2>
+                <h2>2.People use different amounts of energy at different times</h2>
+                <h2>3.It's hard to balance how much energy is made vs. how much is needed</h2>
+            </p>
+            <hr class="divider">
+            <h4> Solution: QAOA for Traffic Optimization</h4>
+            <h2> ⚛️ Quantum Solution: Smart Energy Planning with Quantum Computers
+                Quantum computers are really good at simulating and optimizing complex systems. The energy grid is one of them!
+                They can:Simulate the whole energy system (who needs how much, and when)
+                Find the best way to share power so no one runs out or wastes energy
+                Help decide when to store energy (like in batteries) and when to use it
+                </h2>
+        </div>
+
+        <!-- New Solution Section -->
+        <div class="solution-box">
+            <h4 class="solution-title">🔋 Simple Steps of How It Works</h4>
+            
+            <div class="step step-1">
+                <h5 class="step-title">Step 1: Collect City Data</h5>
+                <div class="step-content">
+                    The system checks:
+                    <ul>
+                        <li>How much energy is being made (solar panels, wind turbines, etc.)</li>
+                        <li>How much energy people are using (homes, offices, factories)</li>
+                        <li>Weather conditions, time of day, holidays</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step step-2">
+                <h5 class="step-title">Step 2: Create a Virtual Model</h5>
+                <div class="step-content">
+                    The energy grid is turned into a virtual map — like a puzzle that shows:
+                    <ul>
+                        <li>All power generation sources</li>
+                        <li>Energy storage locations</li>
+                        <li>Distribution networks</li>
+                        <li>Consumption points</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step step-3">
+                <h5 class="step-title">Step 3: Let the Quantum Computer Solve It</h5>
+                <div class="step-content">
+                    It finds:
+                    <ul>
+                        <li>The best way to send energy from source to user</li>
+                        <li>When to store extra energy and when to use stored energy</li>
+                        <li>How to balance energy even if the weather changes</li>
+                        <li>The most efficient routing to minimize losses</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step step-4">
+                <h5 class="step-title">Step 4: Take Action</h5>
+                <div class="step-content">
+                    The city's smart energy system uses the quantum computer's plan to:
+                    <ul>
+                        <li>Turn on or off some power plants</li>
+                        <li>Send power where it's needed most</li>
+                        <li>Keep backup ready for emergencies</li>
+                        <li>Store excess energy during low demand</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h5>💡 Example</h5>
+                <p>Let's say:</p>
+                <ul>
+                    <li>It's a sunny day and solar panels are making a lot of energy</li>
+                    <li>But at night, solar power stops</li>
+                    <li>People still need energy to run lights, fans, and machines</li>
+                </ul>
+                <p>Quantum system helps by:</p>
+                <ul>
+                    <li>Storing extra solar energy during the day</li>
+                    <li>Using it smartly at night when the sun is gone</li>
+                    <li>Avoiding the need to turn on polluting backup power plants</li>
+                    <li>Balancing supply across the entire city</li>
+                </ul>
+            </div>
+            
+            <h5 class="solution-title">🎯 Why Quantum is Better</h5>
+            <div class="comparison">
+                <div class="comparison-column classical">
+                    <div class="column-title">Classical Systems</div>
+                    <div><i class="fas fa-times"></i> Slow with big, changing data</div>
+                    <div><i class="fas fa-times"></i> Hard to plan ahead perfectly</div>
+                    <div><i class="fas fa-times"></i> May waste energy or miss demand</div>
+                </div>
+                <div class="comparison-column quantum">
+                    <div class="column-title">Quantum Systems</div>
+                    <div><i class="fas fa-check"></i> Fast with complex and changing inputs</div>
+                    <div><i class="fas fa-check"></i> Can predict and plan better</div>
+                    <div><i class="fas fa-check"></i> Balance supply and demand well</div>
+                </div>
+            </div>
+            
+            <h5 class="solution-title">🌆 What This Means for Smart Cities</h5>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <p>Lower electricity bills</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-solar-panel"></i>
+                    <p>More use of clean energy</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-smog"></i>
+                    <p>Less pollution</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-battery-three-quarters"></i>
+                    <p>No energy waste</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-bolt"></i>
+                    <p>Power available during storms or peak hours</p>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h5>🏁 In Simple Words:</h5>
+                <p>Quantum computers help cities use energy smartly. They make sure:</p>
+                <ul>
+                    <li>No energy is wasted</li>
+                    <li>People get energy when they need it</li>
+                    <li>Clean energy (like solar/wind) is used as much as possible</li>
+                    <li>The system adapts instantly to changes</li>
+                </ul>
+                <p>It's like giving the city an energy brain that always knows the best way to power everything.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
